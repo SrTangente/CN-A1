@@ -3,7 +3,7 @@ import numpy as np
 from networkx.algorithms import approximation
 from networkx.algorithms import *
 
-def getStrenght(node_list, G):
+def get_strenght(node_list, G):
     strength_dict = {}
     for node in node_list:
         edges_list = G.edges(node)
@@ -13,19 +13,19 @@ def getStrenght(node_list, G):
         strength_dict[node] = strength
     return strength_dict
 
-def averagePathLength(node_list,G):
+def average_path_length(node_list, G):
     average_list = list()
     for node in node_list:
-        average_list.append(np.mean(list(nx.single_source_shortest_path_length(net, node).values())))
+        average_list.append(np.mean(list(nx.single_source_shortest_path_length(G, node).values())))
     return average_list
 
-def maximumPathLength(node_list,G):
+def maximum_path_length(node_list, G):
     average_list = list()
     for node in node_list:
-        average_list.append(np.max(list(nx.single_source_shortest_path_length(net, node).values())))
+        average_list.append(np.max(list(nx.single_source_shortest_path_length(G, node).values())))
     return average_list
 
-def betweenes(node_list,G):
+def betweenness(node_list,G):
     bet = list()
     bet_dict = nx.betweenness_centrality(G)
     for node in node_list:
@@ -34,12 +34,22 @@ def betweenes(node_list,G):
 
 net = nx.Graph(nx.read_pajek('./real/airports_UW.net'))
 
+
+def eigenvector_centrality(G, nodes):
+    dict = nx.eigenvector_centrality(G)
+    return [dict[node] for node in nodes]
+
+def pagerank(G, nodes):
+    dict = nx.pagerank(G)
+    return [dict[node] for node in nodes]
+
 nodes = ['PAR', 'LON', 'FRA', 'AMS', 'MOW', 'CHI', 'NYC', 'ATL', 'BCN', 'WAW', 'CHC', 'DJE', 'ADA', 'AGU', 'TBO', 'ZVA']
 
 
-nodes_strength = getStrenght(nodes,net)
+nodes_strength = get_strenght(nodes, net)
 
 
-print(clustering(net,nodes))
+print(eigenvector_centrality(net, nodes))
+print(pagerank(net, nodes))
 
 
