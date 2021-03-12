@@ -43,13 +43,20 @@ def pagerank(G, nodes):
     dict = nx.pagerank(G)
     return [dict[node] for node in nodes]
 
+
 nodes = ['PAR', 'LON', 'FRA', 'AMS', 'MOW', 'CHI', 'NYC', 'ATL', 'BCN', 'WAW', 'CHC', 'DJE', 'ADA', 'AGU', 'TBO', 'ZVA']
 
-
+# Descriptors of the nodes
+degree_list = net.degree(nodes)
 nodes_strength = get_strenght(nodes, net)
+clustering = clustering(net, nodes)
+avg_path_len = average_path_length(nodes, net)
+max_path_len = maximum_path_length(nodes, net)
+betweeness = betweenness(nodes, net)
+eigen_centrality = eigenvector_centrality(net, nodes)
+pagerank = pagerank(net, nodes)
 
 
-print(eigenvector_centrality(net, nodes))
-print(pagerank(net, nodes))
+# TODO write into csv
 
 
