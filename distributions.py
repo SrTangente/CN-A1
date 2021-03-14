@@ -44,11 +44,11 @@ for i,a in zip(graphs,apply_log):
 
     # PDF
     if a:
-        #ax[0].bar(true_x, div_bins, color="b")
-        ax[0].hist(log_k, bins=10)
+        ax[0].bar(true_x, div_bins, color="b")
+        #ax[0].hist(log_k, bins=10)
     else:
-        #ax[0].bar(deg, cnt, color="b")
-        ax[0].hist(cnt, bins=10)
+        ax[0].bar(deg, cnt, color="b")
+        #ax[0].hist(cnt, bins=10)
     ax[0].set_title("PDF")
     ax[0].set_ylabel("P(k)")
     ax[0].set_xlabel("k")
