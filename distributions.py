@@ -4,8 +4,9 @@ import collections
 import numpy as np
 
 graphs = ['model/ER5000k8.net', 'model/SF_1000_g2.7.net', 'model/ws1000.net', 'real/airports_UW.net']
+apply_log = [False,True,False,True]
 
-for i in graphs:
+for i,a in zip(graphs,apply_log):
     G = nx.Graph(nx.read_pajek(i))
 
     degree_sequence = sorted([d for n, d in G.degree()])  # degree sequence
@@ -42,7 +43,12 @@ for i in graphs:
     div_bins = bins / total_count
 
     # PDF
-    ax[0].bar(true_x, div_bins, color="b")
+    if a:
+        #ax[0].bar(true_x, div_bins, color="b")
+        ax[0].hist(log_k, bins=10)
+    else:
+        #ax[0].bar(deg, cnt, color="b")
+        ax[0].hist(cnt, bins=10)
     ax[0].set_title("PDF")
     ax[0].set_ylabel("P(k)")
     ax[0].set_xlabel("k")
