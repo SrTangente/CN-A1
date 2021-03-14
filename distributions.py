@@ -4,9 +4,9 @@ import collections
 import numpy as np
 
 graphs = ['model/ER5000k8.net', 'model/SF_1000_g2.7.net', 'model/ws1000.net', 'real/airports_UW.net']
-apply_log = [False,True,False,True]
+apply_log = [False, True, False, True]
 
-for i,a in zip(graphs,apply_log):
+for i,a in zip(graphs, apply_log):
     G = nx.Graph(nx.read_pajek(i))
 
     degree_sequence = sorted([d for n, d in G.degree()])  # degree sequence
@@ -35,7 +35,7 @@ for i,a in zip(graphs,apply_log):
             if log_k[l] >= x_bins[v] and log_k[l] < x_bins[v+1]:
                 bins[v] += cnt[l]
 
-    fig, ax = plt.subplots(2)
+    fig, ax = plt.subplots(1, 2)
 
     print(bins)
     print(x_bins)
@@ -44,21 +44,28 @@ for i,a in zip(graphs,apply_log):
 
     # PDF
     if a:
-        ax[0].bar(true_x, div_bins, color="b")
-        #ax[0].hist(log_k, bins=10)
+        ax[0].bar(x_bins, div_bins, color="b")
+        ax[0].set_ylabel("log(P(k))")
+        ax[0].set_xlabel("log(k)")
     else:
         ax[0].bar(deg, cnt, color="b")
-        #ax[0].hist(cnt, bins=10)
+        ax[0].set_ylabel("P(k)")
+        ax[0].set_xlabel("k")
     ax[0].set_title("PDF")
-    ax[0].set_ylabel("P(k)")
-    ax[0].set_xlabel("k")
+
 
     # CCDF
     accumulated_bins = [np.sum(div_bins[0:i]) for i in range(1, len(bins)+1)]
+    accumulated_cnt = [np.sum(cnt[0:i]) for i in range(1, len(cnt)+1)]
 
     ax[1].set_title("CCDF")
-    ax[1].set_ylabel("P(K>=k)")
-    ax[1].set_xlabel("k")
-    ax[1].bar(true_x, accumulated_bins / total_count, color="b")
+    if a:
+        ax[1].set_ylabel("log(P(K>=k))")
+        ax[1].set_xlabel("log(k)")
+        ax[1].bar(x_bins, accumulated_bins / total_count, color="b")
+    else:
+        ax[1].set_ylabel("P(K>=k)")
+        ax[1].set_xlabel("k")
+        ax[1].bar(deg, accumulated_cnt / total_count, color="b")
 
     plt.show()
