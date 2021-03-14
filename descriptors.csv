@@ -1,0 +1,4 @@
+Graph,n_nodes,n_edges,min_degree,max_degree,av_degree,clustering_cof,assortativity,av_path_length,diameter
+256_4_4_2_15_18_p.net,256,2274,15,23,17.7656,0.705,0.0286,2.7821,5
+256_4_4_4_13_18_p.net,256,2299,10,25,17.9609,0.498,0.0007,2.6511,4
+BA1000.net,1000,3990,4,115,7.98,0.045,-0.0542,3.1833,5
