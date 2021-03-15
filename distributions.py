@@ -44,25 +44,25 @@ for i,a in zip(graphs, apply_log):
 
     # PDF
     if a:
-        ax[0].bar(x_bins, div_bins, color="b")
+        ax[0].bar(x_bins, div_bins, color="b", width=0.1)
         ax[0].set_ylabel("log(P(k))")
         ax[0].set_xlabel("log(k)")
     else:
-        ax[0].bar(deg, cnt, color="b")
+        ax[0].bar(deg, cnt / total_count, color="b")
         ax[0].set_ylabel("P(k)")
         ax[0].set_xlabel("k")
     ax[0].set_title("PDF")
 
 
     # CCDF
-    accumulated_bins = [np.sum(div_bins[0:i]) for i in range(1, len(bins)+1)]
-    accumulated_cnt = [np.sum(cnt[0:i]) for i in range(1, len(cnt)+1)]
+    accumulated_bins = [np.sum(div_bins[i: len(bins)]) for i in range(0, len(bins))]
+    accumulated_cnt = [np.sum(cnt[i: len(cnt)]) for i in range(0, len(cnt))]
 
     ax[1].set_title("CCDF")
     if a:
         ax[1].set_ylabel("log(P(K>=k))")
         ax[1].set_xlabel("log(k)")
-        ax[1].bar(x_bins, accumulated_bins / total_count, color="b")
+        ax[1].bar(x_bins, accumulated_bins, color="b", width=0.1)
     else:
         ax[1].set_ylabel("P(K>=k)")
         ax[1].set_xlabel("k")
